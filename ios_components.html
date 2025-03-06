@@ -17,61 +17,61 @@
         /* 导入iOS组件样式 */
         @import url('ios_components.html');
         
-        /* iOS通用组件样式 */
-
-        /* 容器 */
+        /* iOS容器 */
         .ios-container {
-            max-width: 430px;
-            margin: 0 auto;
-            min-height: 100vh;
-            background-color: #f2f2f7;
-            position: relative;
+            width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
+            background-color: #f5f8f5;
+            position: relative;
+            overflow: hidden;
         }
         
         /* 状态栏 */
         .ios-status-bar {
             height: 44px;
-            padding: 0 16px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            font-size: 14px;
-            color: #000;
-            background-color: transparent;
+            justify-content: space-between;
+            padding: 0 16px;
+            position: relative;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         }
         
         .status-left {
+            display: flex;
+            align-items: center;
+        }
+        
+        .status-time {
             font-weight: 600;
+            font-size: 15px;
         }
         
         .status-right {
             display: flex;
-            gap: 8px;
+            align-items: center;
         }
         
-        /* 标题栏 */
+        .status-battery, .status-wifi, .status-signal {
+            margin-left: 6px;
+            font-size: 14px;
+        }
+        
+        /* iOS标题栏 */
         .ios-title-bar {
             height: 44px;
-            padding: 0 16px;
+            width: 100%;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            background-color: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
+            justify-content: center;
+            position: relative;
+            background-color: rgba(255, 255, 255, 0.9);
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        }
-        
-        .back-button {
-            display: flex;
-            align-items: center;
-            color: #007aff;
-            font-size: 17px;
-        }
-        
-        .back-button i {
-            margin-right: 5px;
         }
         
         .title-text {
@@ -80,27 +80,30 @@
             color: #000;
         }
         
+        .back-button {
+            position: absolute;
+            left: 16px;
+            display: flex;
+            align-items: center;
+            color: #33b249;
+            font-size: 16px;
+        }
+        
         .action-button {
-            color: #007aff;
-            font-size: 17px;
+            position: absolute;
+            right: 16px;
+            color: #33b249;
+            font-size: 16px;
         }
         
         /* 内容区域 */
         .ios-content {
             flex: 1;
-            padding-bottom: 50px; /* 为底部导航栏留出空间 */
             overflow-y: auto;
-        }
-        
-        /* 标签样式 */
-        .ios-tag {
-            display: inline-block;
-            padding: 6px 12px;
-            background-color: rgba(51, 178, 73, 0.1);
-            color: #33b249;
-            border-radius: 15px;
-            font-size: 13px;
-            font-weight: 500;
+            -webkit-overflow-scrolling: touch;
+            padding: 16px;
+            padding-bottom: 70px;
+            background-color: #f5f8f5;
         }
         
         /* 底部导航栏 */
@@ -121,7 +124,6 @@
         }
         
         .tab-item {
-            text-decoration: none;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -150,14 +152,14 @@
         
         /* 动态岛 */
         .dynamic-island {
-            width: 120px;
-            height: 35px;
-            background-color: #000;
-            border-radius: 20px;
-            position: fixed;
-            top: 12px;
+            position: absolute;
+            top: 11px;
             left: 50%;
             transform: translateX(-50%);
+            width: 120px;
+            height: 25px;
+            background-color: #000;
+            border-radius: 20px;
             z-index: 1000;
         }
         
@@ -232,6 +234,18 @@
             margin-bottom: 16px;
             min-height: 120px;
             resize: none;
+        }
+        
+        /* 标签样式 */
+        .ios-tag {
+            display: inline-block;
+            padding: 4px 10px;
+            font-size: 13px;
+            border-radius: 16px;
+            background-color: rgba(51, 178, 73, 0.1);
+            color: #33b249;
+            margin-right: 8px;
+            margin-bottom: 8px;
         }
     </style>
 </head>
