@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>灵感助手 - 导入导出</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 导入iOS组件样式 */
+        @import url('ios_components.html');
+        
+        /* 专门针对导入导出界面的样式 */
+        .import-export-section {
+            background-color: white;
+            margin: 16px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .section-header {
+            padding: 12px 16px;
+            font-size: 14px;
+            color: #8e8e93;
+            background-color: #f5f8f5;
+        }
+
+        .section-item {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .section-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+        }
+
+        .item-icon.blue {
+            background-color: #007AFF;
+        }
+
+        .item-icon.green {
+            background-color: #33b249;
+        }
+
+        .item-icon i {
+            color: white;
+            font-size: 18px;
+        }
+
+        .item-content {
+            flex: 1;
+        }
+
+        .item-title {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .item-subtitle {
+            font-size: 13px;
+            color: #8e8e93;
+        }
+
+        .item-action {
+            color: #8e8e93;
+        }
+
+        .import-export-info {
+            margin: 16px;
+            padding: 12px;
+            background-color: rgba(51, 178, 73, 0.1);
+            border-radius: 8px;
+            font-size: 13px;
+            color: #33b249;
+            line-height: 1.4;
+        }
+
+        .file-format-section {
+            margin: 16px;
+        }
+
+        .format-title {
+            font-size: 14px;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .format-list {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .format-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .format-item:last-child {
+            border-bottom: none;
+        }
+
+        .format-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            background-color: #f2f2f7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+        }
+
+        .format-icon i {
+            font-size: 14px;
+            color: #333;
+        }
+
+        .format-name {
+            font-size: 14px;
+            color: #333;
+        }
+
+        .sync-status {
+            text-align: center;
+            padding: 16px;
+            color: #8e8e93;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="ios-container">
+        <!-- 动态岛 -->
+        <div class="dynamic-island"></div>
+        
+        <!-- 状态栏 -->
+        <div class="ios-status-bar">
+            <div class="status-left">
+                <span class="status-time">9:41</span>
+            </div>
+            <div class="status-right">
+                <span class="status-signal"><i class="fas fa-signal"></i></span>
+                <span class="status-wifi"><i class="fas fa-wifi"></i></span>
+                <span class="status-battery"><i class="fas fa-battery-full"></i></span>
+            </div>
+        </div>
+        
+        <!-- 标题栏 -->
+        <div class="ios-title-bar">
+            <div class="back-button">
+                <i class="fas fa-chevron-left"></i>
+                <span>返回</span>
+            </div>
+            <div class="title-text">导入导出</div>
+        </div>
+        
+        <!-- 内容区域 -->
+        <div class="ios-content">
+            <!-- 导入导出信息提示 -->
+            <div class="import-export-info">
+                <i class="fas fa-info-circle"></i>
+                您可以导入导出笔记数据，支持多种格式，确保数据安全备份。
+            </div>
+
+            <!-- 导入选项 -->
+            <div class="import-export-section">
+                <div class="section-header">导入选项</div>
+                <div class="section-item">
+                    <div class="item-icon blue">
+                        <i class="fas fa-file-import"></i>
+                    </div>
+                    <div class="item-content">
+                        <div class="item-title">从文件导入</div>
+                        <div class="item-subtitle">支持 TXT、Markdown、PDF 等格式</div>
+                    </div>
+                    <div class="item-action">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+                <div class="section-item">
+                    <div class="item-icon blue">
+                        <i class="fas fa-cloud-download-alt"></i>
+                    </div>
+                    <div class="item-content">
+                        <div class="item-title">从iCloud导入</div>
+                        <div class="item-subtitle">从iCloud备份中恢复数据</div>
+                    </div>
+                    <div class="item-action">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 导出选项 -->
+            <div class="import-export-section">
+                <div class="section-header">导出选项</div>
+                <div class="section-item">
+                    <div class="item-icon green">
+                        <i class="fas fa-file-export"></i>
+                    </div>
+                    <div class="item-content">
+                        <div class="item-title">导出为文件</div>
+                        <div class="item-subtitle">导出为多种格式文件</div>
+                    </div>
+                    <div class="item-action">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+                <div class="section-item">
+                    <div class="item-icon green">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <div class="item-content">
+                        <div class="item-title">备份到iCloud</div>
+                        <div class="item-subtitle">将数据备份到iCloud</div>
+                    </div>
+                    <div class="item-action">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 支持的文件格式 -->
+            <div class="file-format-section">
+                <div class="format-title">支持的文件格式</div>
+                <div class="format-list">
+                    <div class="format-item">
+                        <div class="format-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="format-name">TXT 文本文件</div>
+                    </div>
+                    <div class="format-item">
+                        <div class="format-icon">
+                            <i class="fab fa-markdown"></i>
+                        </div>
+                        <div class="format-name">Markdown 文件</div>
+                    </div>
+                    <div class="format-item">
+                        <div class="format-icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <div class="format-name">PDF 文档</div>
+                    </div>
+                    <div class="format-item">
+                        <div class="format-icon">
+                            <i class="fas fa-file-word"></i>
+                        </div>
+                        <div class="format-name">Word 文档</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 同步状态 -->
+            <div class="sync-status">
+                上次同步时间：2024年3月21日 15:30
+            </div>
+        </div>
+        
+        <!-- 底部导航栏 -->
+        <div class="ios-tab-bar" style="height: 50px; width: 100%; background-color: #ffffff; display: flex; justify-content: space-between; align-items: center; position: fixed; bottom: 0; left: 0; right: 0; border-top: 1px solid #e0e0e0; padding: 0; z-index: 100;">
+            <a href="home.html" class="tab-item" style="text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; height: 49px;">
+                <i class="fas fa-house tab-icon" style="font-size: 21px; color: #8e8e93; margin-bottom: 2px;"></i>
+                <span class="tab-label" style="font-size: 10px; color: #8e8e93; margin-top: 1px;">首页</span>
+            </a>
+            <a href="tags.html" class="tab-item" style="text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; height: 49px;">
+                <i class="fas fa-tags tab-icon" style="font-size: 21px; color: #8e8e93; margin-bottom: 2px;"></i>
+                <span class="tab-label" style="font-size: 10px; color: #8e8e93; margin-top: 1px;">标签</span>
+            </a>
+            <a href="ai_analysis.html" class="tab-item" style="text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; height: 49px;">
+                <i class="fas fa-chart-simple tab-icon" style="font-size: 21px; color: #8e8e93; margin-bottom: 2px;"></i>
+                <span class="tab-label" style="font-size: 10px; color: #8e8e93; margin-top: 1px;">AI分析</span>
+            </a>
+            <a href="settings.html" class="tab-item" style="text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; height: 49px;">
+                <i class="fas fa-gear tab-icon" style="font-size: 21px; color: #8e8e93; margin-bottom: 2px;"></i>
+                <span class="tab-label" style="font-size: 10px; color: #8e8e93; margin-top: 1px;">设置</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html> 

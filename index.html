@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>灵感助手 - 原型设计</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+        
+        .prototype-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+        
+        .device-wrapper {
+            position: relative;
+            width: 375px;
+            height: 812px;
+            margin-bottom: 40px;
+            border-radius: 40px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            background-color: white;
+        }
+        
+        .screen-title {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 1.2rem;
+        }
+        
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .page-title {
+            text-align: center;
+            font-size: 2rem;
+            margin: 20px 0 40px 0;
+            color: #33b249;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="page-title">灵感助手 - 界面原型设计</h1>
+    
+    <div class="prototype-container">
+        <!-- 主页界面 -->
+        <div>
+            <div class="screen-title">主页界面</div>
+            <div class="device-wrapper">
+                <iframe src="home.html" title="主页界面"></iframe>
+            </div>
+        </div>
+        
+        <!-- 新建笔记界面 -->
+        <div>
+            <div class="screen-title">新建笔记界面</div>
+            <div class="device-wrapper">
+                <iframe src="new_note.html" title="新建笔记界面"></iframe>
+            </div>
+        </div>
+        
+        <!-- 笔记详情界面 -->
+        <div>
+            <div class="screen-title">笔记详情界面</div>
+            <div class="device-wrapper">
+                <iframe src="note_detail.html" title="笔记详情界面"></iframe>
+            </div>
+        </div>
+        
+        <!-- 分类界面 -->
+        <div>
+            <div class="screen-title">分类界面</div>
+            <div class="device-wrapper">
+                <iframe src="categories.html" title="分类界面"></iframe>
+            </div>
+        </div>
+        
+        <!-- 标签筛选界面 -->
+        <div>
+            <div class="screen-title">标签筛选界面</div>
+            <div class="device-wrapper">
+                <iframe src="tags.html" title="标签筛选界面"></iframe>
+            </div>
+        </div>
+        
+        <!-- 设置界面 -->
+        <div>
+            <div class="screen-title">设置界面</div>
+            <div class="device-wrapper">
+                <iframe src="settings.html" title="设置界面"></iframe>
+            </div>
+        </div>
+        
+        <!-- AI灵感分析界面 -->
+        <div>
+            <div class="screen-title">AI灵感分析界面</div>
+            <div class="device-wrapper">
+                <iframe src="ai_analysis.html" title="AI灵感分析界面"></iframe>
+            </div>
+        </div>
+        
+        <!-- 导入导出界面 -->
+        <div>
+            <div class="screen-title">导入导出界面</div>
+            <div class="device-wrapper">
+                <iframe src="import_export.html" title="导入导出界面"></iframe>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

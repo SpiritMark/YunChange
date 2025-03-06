@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>灵感助手 - 新建笔记</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 导入iOS组件样式 */
+        @import url('ios_components.html');
+        
+        /* 专门针对新建笔记的样式 */
+        .note-editor {
+            padding: 20px 16px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .note-textarea {
+            width: 100%;
+            flex: 1;
+            padding: 16px;
+            font-size: 16px;
+            line-height: 1.5;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            outline: none;
+            resize: none;
+            margin-bottom: 20px;
+            background-color: white;
+        }
+        
+        .note-options {
+            margin-bottom: 20px;
+        }
+        
+        .option-group {
+            margin-bottom: 16px;
+        }
+        
+        .option-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        
+        .option-selector {
+            display: flex;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 8px;
+        }
+        
+        .option-item {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 10px;
+            padding: 8px 14px;
+            border-radius: 16px;
+            font-size: 14px;
+            font-weight: 500;
+            background-color: #f2f2f7;
+            color: #8e8e93;
+        }
+        
+        .option-item.active {
+            background-color: #33b249;
+            color: white;
+        }
+        
+        .option-icon {
+            margin-right: 6px;
+            font-size: 14px;
+        }
+        
+        .color-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .color-item {
+            width: 32px;
+            height: 32px;
+            border-radius: 16px;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        
+        .color-item.active {
+            border-color: #000;
+            transform: scale(1.1);
+        }
+        
+        .color-green {
+            background-color: #33b249;
+        }
+        
+        .color-mint {
+            background-color: #64d2bd;
+        }
+        
+        .color-teal {
+            background-color: #5ac8fa;
+        }
+        
+        .color-lime {
+            background-color: #a4cf30;
+        }
+        
+        .color-lightgreen {
+            background-color: #7dd667;
+        }
+        
+        .ai-section {
+            background-color: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .ai-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .ai-icon {
+            width: 24px;
+            height: 24px;
+            background-color: #33b249;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+        }
+        
+        .ai-icon i {
+            color: white;
+            font-size: 14px;
+        }
+        
+        .ai-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .ai-content {
+            background-color: rgba(51, 178, 73, 0.05);
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 14px;
+            line-height: 1.4;
+            color: #333;
+        }
+        
+        .ai-content .category {
+            font-weight: 600;
+            color: #33b249;
+        }
+        
+        .ai-tags {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        
+        .ai-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(51, 178, 73, 0.1);
+            color: #33b249;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-top: 8px;
+            width: 100%;
+        }
+        
+        .ai-button i {
+            margin-right: 6px;
+        }
+        
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 20px;
+        }
+        
+        .cancel-button {
+            background-color: #f2f2f7;
+            color: #333;
+            border-radius: 10px;
+            padding: 12px 0;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            border: none;
+        }
+        
+        .save-button {
+            background-color: #33b249;
+            color: white;
+            border-radius: 10px;
+            padding: 12px 0;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            border: none;
+        }
+        
+        .tag-input {
+            display: flex;
+            margin-bottom: 16px;
+        }
+        
+        .tag-input input {
+            flex: 1;
+            padding: 10px 12px;
+            font-size: 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            margin-right: 8px;
+        }
+        
+        .tag-input button {
+            background-color: #33b249;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0 16px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="ios-container">
+        <!-- 动态岛 -->
+        <div class="dynamic-island"></div>
+        
+        <!-- 状态栏 -->
+        <div class="ios-status-bar">
+            <div class="status-left">
+                <span class="status-time">9:41</span>
+            </div>
+            <div class="status-right">
+                <span class="status-signal"><i class="fas fa-signal"></i></span>
+                <span class="status-wifi"><i class="fas fa-wifi"></i></span>
+                <span class="status-battery"><i class="fas fa-battery-full"></i></span>
+            </div>
+        </div>
+        
+        <!-- 标题栏 -->
+        <div class="ios-title-bar">
+            <div class="back-button">
+                <i class="fas fa-chevron-left"></i>
+                <span>返回</span>
+            </div>
+            <div class="title-text">新建灵感</div>
+        </div>
+        
+        <div class="ios-content">
+            <div class="note-editor">
+                <!-- 笔记输入区域 -->
+                <textarea class="note-textarea" placeholder="记录你的灵感..."></textarea>
+                
+                <!-- AI辅助分析 -->
+                <div class="ai-section">
+                    <div class="ai-header">
+                        <div class="ai-icon">
+                            <i class="fas fa-magic"></i>
+                        </div>
+                        <div class="ai-title">AI分析建议</div>
+                    </div>
+                    <div class="ai-content">
+                        根据内容分析，这条灵感最适合归类到 <span class="category">创意</span> 分类。
+                        <div class="ai-tags">
+                            <span class="ios-tag">AI</span>
+                            <span class="ios-tag">创新</span>
+                            <span class="ios-tag">技术</span>
+                        </div>
+                    </div>
+                    <button class="ai-button">
+                        <i class="fas fa-magic"></i>
+                        <span>应用AI建议</span>
+                    </button>
+                </div>
+                
+                <!-- 选项设置 -->
+                <div class="note-options">
+                    <!-- 分类选择 -->
+                    <div class="option-group">
+                        <div class="option-title">分类</div>
+                        <div class="option-selector">
+                            <div class="option-item">
+                                <i class="fas fa-layer-group option-icon"></i>
+                                <span>通用</span>
+                            </div>
+                            <div class="option-item active">
+                                <i class="fas fa-lightbulb option-icon"></i>
+                                <span>创意</span>
+                            </div>
+                            <div class="option-item">
+                                <i class="fas fa-briefcase option-icon"></i>
+                                <span>工作</span>
+                            </div>
+                            <div class="option-item">
+                                <i class="fas fa-user option-icon"></i>
+                                <span>个人</span>
+                            </div>
+                            <div class="option-item">
+                                <i class="fas fa-list-check option-icon"></i>
+                                <span>待办</span>
+                            </div>
+                            <div class="option-item">
+                                <i class="fas fa-book option-icon"></i>
+                                <span>学习</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 颜色选择 -->
+                    <div class="option-group">
+                        <div class="option-title">颜色</div>
+                        <div class="color-selector">
+                            <div class="color-item color-green active"></div>
+                            <div class="color-item color-mint"></div>
+                            <div class="color-item color-teal"></div>
+                            <div class="color-item color-lime"></div>
+                            <div class="color-item color-lightgreen"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- 标签输入 -->
+                    <div class="option-group">
+                        <div class="option-title">标签</div>
+                        <div class="tag-input">
+                            <input type="text" placeholder="添加标签...">
+                            <button>添加</button>
+                        </div>
+                        <div class="tag-container">
+                            <span class="ios-tag">AI<i class="fas fa-times" style="margin-left: 4px;"></i></span>
+                            <span class="ios-tag">创新<i class="fas fa-times" style="margin-left: 4px;"></i></span>
+                            <span class="ios-tag">技术<i class="fas fa-times" style="margin-left: 4px;"></i></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 操作按钮 -->
+                <div class="action-buttons">
+                    <button class="cancel-button">取消</button>
+                    <button class="save-button">保存</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 底部导航栏 -->
+        <div class="ios-tab-bar" style="height: 50px; width: 100%; background-color: #ffffff; display: flex; justify-content: space-between; align-items: center; position: fixed; bottom: 0; left: 0; right: 0; border-top: 1px solid #e0e0e0; padding: 0; z-index: 100;">
+            <div class="tab-item" style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; height: 49px;">
+                <i class="fas fa-house tab-icon" style="font-size: 21px; color: #8e8e93; margin-bottom: 2px;"></i>
+                <span class="tab-label" style="font-size: 10px; color: #8e8e93; margin-top: 1px;">首页</span>
+            </div>
+            <div class="tab-item" style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; height: 49px;">
+                <i class="fas fa-bookmark tab-icon" style="font-size: 21px; color: #8e8e93; margin-bottom: 2px;"></i>
+                <span class="tab-label" style="font-size: 10px; color: #8e8e93; margin-top: 1px;">收藏</span>
+            </div>
+            <div class="tab-item" style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; height: 49px;">
+                <i class="fas fa-chart-simple tab-icon" style="font-size: 21px; color: #8e8e93; margin-bottom: 2px;"></i>
+                <span class="tab-label" style="font-size: 10px; color: #8e8e93; margin-top: 1px;">AI分析</span>
+            </div>
+            <div class="tab-item" style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; height: 49px;">
+                <i class="fas fa-user tab-icon" style="font-size: 21px; color: #8e8e93; margin-bottom: 2px;"></i>
+                <span class="tab-label" style="font-size: 10px; color: #8e8e93; margin-top: 1px;">我的</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

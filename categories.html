@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>灵感助手 - 分类</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 导入iOS组件样式 */
+        @import url('ios_components.html');
+        
+        /* 专门针对分类页面的样式 */
+        .category-stats {
+            background-color: white;
+            margin: 16px;
+            padding: 20px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #8e8e93;
+        }
+
+        .category-section {
+            margin: 16px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .add-category {
+            color: #33b249;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .category-list {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .category-item {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .category-item:last-child {
+            border-bottom: none;
+        }
+
+        .category-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+        }
+
+        .category-icon.work {
+            background-color: #007AFF;
+        }
+
+        .category-icon.study {
+            background-color: #33b249;
+        }
+
+        .category-icon.life {
+            background-color: #FF9500;
+        }
+
+        .category-icon.idea {
+            background-color: #AF52DE;
+        }
+
+        .category-icon.other {
+            background-color: #8E8E93;
+        }
+
+        .category-icon i {
+            color: white;
+            font-size: 18px;
+        }
+
+        .category-content {
+            flex: 1;
+        }
+
+        .category-name {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .category-count {
+            font-size: 13px;
+            color: #8e8e93;
+        }
+
+        .category-action {
+            color: #8e8e93;
+        }
+
+        .recent-notes {
+            margin: 16px;
+        }
+
+        .note-list {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .note-item {
+            display: flex;
+            padding: 16px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .note-item:last-child {
+            border-bottom: none;
+        }
+
+        .note-category-indicator {
+            width: 4px;
+            height: 40px;
+            border-radius: 2px;
+            margin-right: 12px;
+        }
+
+        .note-category-indicator.work {
+            background-color: #007AFF;
+        }
+
+        .note-category-indicator.study {
+            background-color: #33b249;
+        }
+
+        .note-content {
+            flex: 1;
+        }
+
+        .note-title {
+            font-size: 15px;
+            color: #333;
+            margin-bottom: 4px;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .note-meta {
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            color: #8e8e93;
+        }
+
+        .note-date {
+            margin-right: 8px;
+        }
+
+        .note-category {
+            padding: 2px 6px;
+            background-color: rgba(0, 122, 255, 0.1);
+            border-radius: 4px;
+            color: #007AFF;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 32px 16px;
+            color: #8e8e93;
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            color: #c7c7cc;
+        }
+
+        .empty-text {
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        .empty-subtext {
+            font-size: 13px;
+            color: #8e8e93;
+        }
+    </style>
+</head>
+<body>
+    <div class="ios-container">
+        <!-- 动态岛 -->
+        <div class="dynamic-island"></div>
+        
+        <!-- 状态栏 -->
+        <div class="ios-status-bar">
+            <div class="status-left">
+                <span class="status-time">9:41</span>
+            </div>
+            <div class="status-right">
+                <span class="status-signal"><i class="fas fa-signal"></i></span>
+                <span class="status-wifi"><i class="fas fa-wifi"></i></span>
+                <span class="status-battery"><i class="fas fa-battery-full"></i></span>
+            </div>
+        </div>
+        
+        <!-- 标题栏 -->
+        <div class="ios-title-bar">
+            <div class="title-text">分类</div>
+            <div class="action-button">
+                <i class="fas fa-plus"></i>
+            </div>
+        </div>
+        
+        <!-- 内容区域 -->
+        <div class="ios-content">
+            <!-- 统计信息 -->
+            <div class="category-stats">
+                <div class="stat-item">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">分类总数</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">28</div>
+                    <div class="stat-label">笔记总数</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">本月新增</div>
+                </div>
+            </div>
+
+            <!-- 分类列表 -->
+            <div class="category-section">
+                <div class="section-header">
+                    <div class="section-title">全部分类</div>
+                    <div class="add-category">添加分类</div>
+                </div>
+                <div class="category-list">
+                    <div class="category-item">
+                        <div class="category-icon work">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="category-content">
+                            <div class="category-name">工作</div>
+                            <div class="category-count">8条笔记</div>
+                        </div>
+                        <div class="category-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    <div class="category-item">
+                        <div class="category-icon study">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="category-content">
+                            <div class="category-name">学习</div>
+                            <div class="category-count">12条笔记</div>
+                        </div>
+                        <div class="category-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    <div class="category-item">
+                        <div class="category-icon life">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="category-content">
+                            <div class="category-name">生活</div>
+                            <div class="category-count">5条笔记</div>
+                        </div>
+                        <div class="category-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    <div class="category-item">
+                        <div class="category-icon idea">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <div class="category-content">
+                            <div class="category-name">创意</div>
+                            <div class="category-count">3条笔记</div>
+                        </div>
+                        <div class="category-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 最近笔记 -->
+            <div class="recent-notes">
+                <div class="section-header">
+                    <div class="section-title">最近笔记</div>
+                </div>
+                <div class="note-list">
+                    <div class="note-item">
+                        <div class="note-category-indicator work"></div>
+                        <div class="note-content">
+                            <div class="note-title">项目进度会议记录</div>
+                            <div class="note-meta">
+                                <span class="note-date">3月21日</span>
+                                <span class="note-category">工作</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="note-item">
+                        <div class="note-category-indicator study"></div>
+                        <div class="note-content">
+                            <div class="note-title">SwiftUI学习笔记 - 动画效果</div>
+                            <div class="note-meta">
+                                <span class="note-date">3月20日</span>
+                                <span class="note-category">学习</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 底部导航栏 -->
+        <div class="ios-tab-bar" style="height: 50px; width: 100%; background-color: #ffffff; display: flex; justify-content: space-between; align-items: center; position: fixed; bottom: 0; left: 0; right: 0; border-top: 1px solid #e0e0e0; padding: 0; z-index: 100;">
+            <a href="home.html" class="tab-item" style="text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; height: 49px;">
+                <i class="fas fa-house tab-icon" style="font-size: 21px; color: #8e8e93; margin-bottom: 2px;"></i>
+                <span class="tab-label" style="font-size: 10px; color: #8e8e93; margin-top: 1px;">首页</span>
+            </a>
+            <a href="tags.html" class="tab-item" style="text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; height: 49px;">
+                <i class="fas fa-tags tab-icon" style="font-size: 21px; color: #8e8e93; margin-bottom: 2px;"></i>
+                <span class="tab-label" style="font-size: 10px; color: #8e8e93; margin-top: 1px;">标签</span>
+            </a>
+            <a href="ai_analysis.html" class="tab-item" style="text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; height: 49px;">
+                <i class="fas fa-chart-simple tab-icon" style="font-size: 21px; color: #8e8e93; margin-bottom: 2px;"></i>
+                <span class="tab-label" style="font-size: 10px; color: #8e8e93; margin-top: 1px;">AI分析</span>
+            </a>
+            <a href="settings.html" class="tab-item" style="text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; height: 49px;">
+                <i class="fas fa-gear tab-icon" style="font-size: 21px; color: #8e8e93; margin-bottom: 2px;"></i>
+                <span class="tab-label" style="font-size: 10px; color: #8e8e93; margin-top: 1px;">设置</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>灵感助手 - 标签</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('ios_components.html');
+
+        .tag-cloud {
+            padding: 16px;
+            background-color: white;
+            margin-bottom: 16px;
+        }
+
+        .tag-cloud-title {
+            font-size: 14px;
+            color: #8e8e93;
+            margin-bottom: 12px;
+        }
+
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag-item {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background-color: rgba(51, 178, 73, 0.1);
+            border-radius: 16px;
+            color: #33b249;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .tag-item.active {
+            background-color: #33b249;
+            color: white;
+        }
+
+        .tag-item i {
+            margin-right: 6px;
+        }
+
+        .tag-count {
+            margin-left: 6px;
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .note-list {
+            background-color: white;
+            margin: 16px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .note-item {
+            padding: 16px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .note-item:last-child {
+            border-bottom: none;
+        }
+
+        .note-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .note-category {
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            color: #8e8e93;
+        }
+
+        .note-category i {
+            margin-right: 4px;
+        }
+
+        .note-date {
+            margin-left: auto;
+            font-size: 12px;
+            color: #8e8e93;
+        }
+
+        .note-content {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .note-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .note-tag {
+            font-size: 12px;
+            padding: 4px 8px;
+            background-color: rgba(51, 178, 73, 0.1);
+            color: #33b249;
+            border-radius: 10px;
+        }
+
+        .section-header {
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            background-color: #f5f8f5;
+        }
+    </style>
+</head>
+<body>
+    <div class="ios-container">
+        <!-- 动态岛 -->
+        <div class="dynamic-island"></div>
+        
+        <!-- 状态栏 -->
+        <div class="ios-status-bar">
+            <div class="status-left">
+                <span class="status-time">9:41</span>
+            </div>
+            <div class="status-right">
+                <span class="status-signal"><i class="fas fa-signal"></i></span>
+                <span class="status-wifi"><i class="fas fa-wifi"></i></span>
+                <span class="status-battery"><i class="fas fa-battery-full"></i></span>
+            </div>
+        </div>
+        
+        <!-- 标题栏 -->
+        <div class="ios-title-bar">
+            <div class="title-text">标签筛选</div>
+        </div>
+
+        <!-- 内容区域 -->
+        <div class="ios-content">
+            <!-- 标签云 -->
+            <div class="tag-cloud">
+                <div class="tag-cloud-title">热门标签</div>
+                <div class="tag-list">
+                    <div class="tag-item active">
+                        <i class="fas fa-code"></i>
+                        SwiftUI
+                        <span class="tag-count">12</span>
+                    </div>
+                    <div class="tag-item">
+                        <i class="fas fa-robot"></i>
+                        AI
+                        <span class="tag-count">8</span>
+                    </div>
+                    <div class="tag-item">
+                        <i class="fas fa-lightbulb"></i>
+                        创新
+                        <span class="tag-count">6</span>
+                    </div>
+                    <div class="tag-item">
+                        <i class="fas fa-mobile-alt"></i>
+                        应用开发
+                        <span class="tag-count">5</span>
+                    </div>
+                    <div class="tag-item">
+                        <i class="fas fa-users"></i>
+                        用户体验
+                        <span class="tag-count">4</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 笔记列表 -->
+            <div class="section-header">
+                包含 "SwiftUI" 标签的笔记
+            </div>
+            <div class="note-list">
+                <div class="note-item">
+                    <div class="note-header">
+                        <div class="note-category">
+                            <i class="fas fa-book"></i>
+                            学习
+                        </div>
+                        <div class="note-date">2023年6月10日</div>
+                    </div>
+                    <div class="note-content">
+                        研究SwiftUI的新特性，尤其是关于动画和数据传递的部分。
+                    </div>
+                    <div class="note-tags">
+                        <span class="note-tag">SwiftUI</span>
+                        <span class="note-tag">iOS开发</span>
+                        <span class="note-tag">学习</span>
+                    </div>
+                </div>
+
+                <div class="note-item">
+                    <div class="note-header">
+                        <div class="note-category">
+                            <i class="fas fa-lightbulb"></i>
+                            创意
+                        </div>
+                        <div class="note-date">2023年6月8日</div>
+                    </div>
+                    <div class="note-content">
+                        使用SwiftUI开发一个创新的手势控制界面，提升用户交互体验。
+                    </div>
+                    <div class="note-tags">
+                        <span class="note-tag">SwiftUI</span>
+                        <span class="note-tag">创新</span>
+                        <span class="note-tag">交互设计</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部导航栏 -->
+        <div class="ios-tab-bar">
+            <a href="home.html" class="tab-item">
+                <i class="fas fa-house tab-icon"></i>
+                <span class="tab-label">首页</span>
+            </a>
+            <a href="tags.html" class="tab-item active">
+                <i class="fas fa-tags tab-icon"></i>
+                <span class="tab-label">标签</span>
+            </a>
+            <a href="ai_analysis.html" class="tab-item">
+                <i class="fas fa-chart-simple tab-icon"></i>
+                <span class="tab-label">AI分析</span>
+            </a>
+            <a href="settings.html" class="tab-item">
+                <i class="fas fa-gear tab-icon"></i>
+                <span class="tab-label">设置</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html> 

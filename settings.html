@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>灵感助手 - 设置</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 导入iOS组件样式 */
+        @import url('ios_components.html');
+        
+        /* 专门针对设置界面的样式 */
+        .settings-header {
+            padding: 20px 16px;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .profile-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            overflow: hidden;
+            margin-right: 16px;
+        }
+        
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .profile-info {
+            flex: 1;
+        }
+        
+        .profile-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        
+        .profile-email {
+            font-size: 14px;
+            color: #8e8e93;
+        }
+        
+        .edit-profile {
+            color: #33b249;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .settings-section {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+        
+        .section-header {
+            padding: 12px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #8e8e93;
+            background-color: #f2f2f7;
+        }
+        
+        .section-item {
+            display: flex;
+            align-items: center;
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .section-item:last-child {
+            border-bottom: none;
+        }
+        
+        .item-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+        }
+        
+        .item-icon.green {
+            background-color: #33b249;
+        }
+        
+        .item-icon.blue {
+            background-color: #007aff;
+        }
+        
+        .item-icon.orange {
+            background-color: #ff9500;
+        }
+        
+        .item-icon.red {
+            background-color: #ff3b30;
+        }
+        
+        .item-icon.purple {
+            background-color: #af52de;
+        }
+        
+        .item-icon.teal {
+            background-color: #5ac8fa;
+        }
+        
+        .item-icon i {
+            color: white;
+            font-size: 16px;
+        }
+        
+        .item-content {
+            flex: 1;
+        }
+        
+        .item-title {
+            font-size: 16px;
+            color: #333;
+        }
+        
+        .item-meta {
+            font-size: 13px;
+            color: #8e8e93;
+            margin-top: 2px;
+        }
+        
+        .item-arrow {
+            color: #c7c7cc;
+            font-size: 14px;
+        }
+        
+        .item-toggle {
+            position: relative;
+            display: inline-block;
+            width: 51px;
+            height: 31px;
+        }
+        
+        .toggle-input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #e9e9eb;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 27px;
+            width: 27px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        .toggle-input:checked + .toggle-slider {
+            background-color: #33b249;
+        }
+        
+        .toggle-input:checked + .toggle-slider:before {
+            transform: translateX(20px);
+        }
+        
+        .subscription-banner {
+            margin: 16px;
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .subscription-content {
+            padding: 16px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .subscription-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .subscription-text {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
+        
+        .subscription-button {
+            background-color: #33b249;
+            color: white;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 14px;
+            font-weight: 500;
+            display: inline-block;
+        }
+        
+        .logout-button {
+            margin: 16px;
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            text-align: center;
+            color: #ff3b30;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 14px 0;
+        }
+        
+        .app-version {
+            text-align: center;
+            font-size: 13px;
+            color: #8e8e93;
+            margin: 16px 0;
+        }
+
+        .settings-list {
+            background-color: white;
+            margin: 16px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .settings-group {
+            margin-bottom: 20px;
+        }
+
+        .settings-header {
+            padding: 12px 16px;
+            font-size: 14px;
+            color: #8e8e93;
+            background-color: #f5f8f5;
+        }
+
+        .settings-item {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .settings-item:last-child {
+            border-bottom: none;
+        }
+
+        .settings-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background-color: #33b249;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+        }
+
+        .settings-icon i {
+            color: white;
+            font-size: 16px;
+        }
+
+        .settings-content {
+            flex: 1;
+        }
+
+        .settings-title {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .settings-subtitle {
+            font-size: 13px;
+            color: #8e8e93;
+        }
+
+        .settings-action {
+            color: #8e8e93;
+        }
+
+        .settings-switch {
+            position: relative;
+            display: inline-block;
+            width: 51px;
+            height: 31px;
+        }
+
+        .settings-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .settings-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #e9e9ea;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .settings-slider:before {
+            position: absolute;
+            content: "";
+            height: 27px;
+            width: 27px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .settings-slider {
+            background-color: #33b249;
+        }
+
+        input:checked + .settings-slider:before {
+            transform: translateX(20px);
+        }
+    </style>
+</head>
+<body>
+    <div class="ios-container">
+        <!-- 动态岛 -->
+        <div class="dynamic-island"></div>
+        
+        <!-- 状态栏 -->
+        <div class="ios-status-bar">
+            <div class="status-left">
+                <span class="status-time">9:41</span>
+            </div>
+            <div class="status-right">
+                <span class="status-signal"><i class="fas fa-signal"></i></span>
+                <span class="status-wifi"><i class="fas fa-wifi"></i></span>
+                <span class="status-battery"><i class="fas fa-battery-full"></i></span>
+            </div>
+        </div>
+        
+        <!-- 标题栏 -->
+        <div class="ios-title-bar">
+            <div class="back-button">
+                <i class="fas fa-chevron-left"></i>
+                <span>返回</span>
+            </div>
+            <div class="title-text">设置</div>
+        </div>
+        
+        <!-- 内容区域 -->
+        <div class="ios-content">
+            <!-- 个人信息 -->
+            <div class="settings-header">
+                <div class="profile-avatar">
+                    <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="头像">
+                </div>
+                <div class="profile-info">
+                    <div class="profile-name">张小明</div>
+                    <div class="profile-email">xiaoming@example.com</div>
+                </div>
+                <div class="edit-profile">编辑</div>
+            </div>
+            
+            <!-- 账户设置 -->
+            <div class="settings-group">
+                <div class="settings-header">账户设置</div>
+                <div class="settings-list">
+                    <div class="settings-item">
+                        <div class="settings-icon" style="background-color: #007AFF;">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="settings-content">
+                            <div class="settings-title">个人资料</div>
+                            <div class="settings-subtitle">修改您的个人信息</div>
+                        </div>
+                        <div class="settings-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-icon" style="background-color: #FF9500;">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="settings-content">
+                            <div class="settings-title">通知设置</div>
+                            <div class="settings-subtitle">自定义通知提醒</div>
+                        </div>
+                        <div class="settings-action">
+                            <label class="settings-switch">
+                                <input type="checkbox" checked>
+                                <span class="settings-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 应用设置 -->
+            <div class="settings-group">
+                <div class="settings-header">应用设置</div>
+                <div class="settings-list">
+                    <div class="settings-item">
+                        <div class="settings-icon" style="background-color: #33b249;">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <div class="settings-content">
+                            <div class="settings-title">主题设置</div>
+                            <div class="settings-subtitle">自定义应用外观</div>
+                        </div>
+                        <div class="settings-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-icon" style="background-color: #5856D6;">
+                            <i class="fas fa-cloud"></i>
+                        </div>
+                        <div class="settings-content">
+                            <div class="settings-title">iCloud同步</div>
+                            <div class="settings-subtitle">自动同步数据到云端</div>
+                        </div>
+                        <div class="settings-action">
+                            <label class="settings-switch">
+                                <input type="checkbox" checked>
+                                <span class="settings-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 其他设置 -->
+            <div class="settings-group">
+                <div class="settings-header">其他</div>
+                <div class="settings-list">
+                    <div class="settings-item">
+                        <div class="settings-icon" style="background-color: #FF2D55;">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="settings-content">
+                            <div class="settings-title">关于我们</div>
+                            <div class="settings-subtitle">了解更多信息</div>
+                        </div>
+                        <div class="settings-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-icon" style="background-color: #8e8e93;">
+                            <i class="fas fa-arrow-right-from-bracket"></i>
+                        </div>
+                        <div class="settings-content">
+                            <div class="settings-title">退出登录</div>
+                        </div>
+                        <div class="settings-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 版本信息 -->
+            <div class="app-version">
+                灵感助手 v1.0.0
+            </div>
+        </div>
+        
+        <!-- 底部导航栏 -->
+        <div class="ios-tab-bar">
+            <a href="home.html" class="tab-item">
+                <i class="fas fa-house tab-icon"></i>
+                <span class="tab-label">首页</span>
+            </a>
+            <a href="tags.html" class="tab-item">
+                <i class="fas fa-tags tab-icon"></i>
+                <span class="tab-label">标签</span>
+            </a>
+            <a href="ai_analysis.html" class="tab-item">
+                <i class="fas fa-chart-simple tab-icon"></i>
+                <span class="tab-label">AI分析</span>
+            </a>
+            <a href="settings.html" class="tab-item active">
+                <i class="fas fa-gear tab-icon"></i>
+                <span class="tab-label">设置</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>灵感助手 - 笔记详情</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 导入iOS组件样式 */
+        @import url('ios_components.html');
+        
+        /* 专门针对笔记详情的样式 */
+        .note-detail {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .detail-header {
+            padding: 20px 16px;
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .detail-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .detail-category {
+            display: flex;
+            align-items: center;
+            background-color: rgba(51, 178, 73, 0.1);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 13px;
+            color: #33b249;
+            font-weight: 500;
+        }
+        
+        .detail-category-icon {
+            margin-right: 4px;
+        }
+        
+        .detail-date {
+            font-size: 13px;
+            color: #8e8e93;
+        }
+        
+        .detail-actions {
+            display: flex;
+            gap: 20px;
+            margin-top: 4px;
+        }
+        
+        .detail-action {
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            color: #8e8e93;
+        }
+        
+        .detail-action-icon {
+            margin-right: 4px;
+            font-size: 16px;
+        }
+        
+        .detail-favorite {
+            color: #ff9500;
+        }
+        
+        .detail-content {
+            padding: 20px 16px;
+            flex: 1;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            background-color: white;
+        }
+        
+        .detail-tags {
+            padding: 16px;
+            background-color: white;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .detail-section {
+            margin-top: 16px;
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .section-header {
+            padding: 12px 16px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .section-header-button {
+            font-size: 13px;
+            color: #33b249;
+            font-weight: 500;
+        }
+        
+        .related-notes {
+            padding: 16px;
+        }
+        
+        .related-note {
+            display: flex;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .related-note:last-child {
+            border-bottom: none;
+        }
+        
+        .related-note-color {
+            width: 4px;
+            height: 40px;
+            border-radius: 2px;
+            margin-right: 12px;
+        }
+        
+        .related-note-color.green {
+            background-color: #33b249;
+        }
+        
+        .related-note-color.teal {
+            background-color: #5ac8fa;
+        }
+        
+        .related-note-content {
+            flex: 1;
+            font-size: 14px;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            color: #333;
+        }
+        
+        .related-note-meta {
+            font-size: 12px;
+            color: #8e8e93;
+            margin-top: 4px;
+        }
+        
+        .action-sheet {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            height: 100%;
+            z-index: 1000;
+        }
+        
+        .sheet-container {
+            width: 100%;
+            max-height: 70%;
+            background-color: white;
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .sheet-header {
+            text-align: center;
+            padding: 16px;
+            font-size: 13px;
+            color: #8e8e93;
+            position: relative;
+        }
+        
+        .sheet-indicator {
+            width: 40px;
+            height: 5px;
+            background-color: #d1d1d6;
+            border-radius: 3px;
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .sheet-title {
+            margin-top: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .sheet-actions {
+            overflow-y: auto;
+        }
+        
+        .sheet-action {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .sheet-action-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 15px;
+            background-color: #f2f2f7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 16px;
+        }
+        
+        .sheet-action-icon.destructive {
+            background-color: #ffecec;
+        }
+        
+        .sheet-action-icon.destructive i {
+            color: #ff3b30;
+        }
+        
+        .sheet-action-icon i {
+            font-size: 16px;
+            color: #333;
+        }
+        
+        .sheet-action-text {
+            font-size: 16px;
+            color: #333;
+        }
+        
+        .sheet-action-text.destructive {
+            color: #ff3b30;
+        }
+        
+        .sheet-cancel {
+            padding: 16px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 600;
+            color: #007aff;
+            background-color: #f2f2f7;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="ios-container">
+        <!-- 动态岛 -->
+        <div class="dynamic-island"></div>
+        
+        <!-- 状态栏 -->
+        <div class="ios-status-bar">
+            <div class="status-left">
+                <span class="status-time">9:41</span>
+            </div>
+            <div class="status-right">
+                <span class="status-signal"><i class="fas fa-signal"></i></span>
+                <span class="status-wifi"><i class="fas fa-wifi"></i></span>
+                <span class="status-battery"><i class="fas fa-battery-full"></i></span>
+            </div>
+        </div>
+        
+        <!-- 标题栏 -->
+        <div class="ios-title-bar">
+            <div class="back-button">
+                <i class="fas fa-chevron-left"></i>
+                <span>返回</span>
+            </div>
+            <div class="title-text">笔记详情</div>
+            <div class="action-button">
+                <i class="fas fa-ellipsis-vertical"></i>
+            </div>
+        </div>
+        
+        <!-- 内容区域 -->
+        <div class="ios-content">
+            <div class="note-detail">
+                <!-- 详情头部 -->
+                <div class="detail-header">
+                    <div class="detail-meta">
+                        <div class="detail-category">
+                            <i class="fas fa-lightbulb detail-category-icon"></i>
+                            <span>创意</span>
+                        </div>
+                        <div class="detail-date">2023年6月15日 14:30</div>
+                    </div>
+                    <div class="detail-actions">
+                        <div class="detail-action">
+                            <i class="fas fa-pencil detail-action-icon"></i>
+                            <span>编辑</span>
+                        </div>
+                        <div class="detail-action detail-favorite">
+                            <i class="fas fa-star detail-action-icon"></i>
+                            <span>已收藏</span>
+                        </div>
+                        <div class="detail-action">
+                            <i class="fas fa-share-alt detail-action-icon"></i>
+                            <span>分享</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 详情内容 -->
+                <div class="detail-content">
+                    开发一个创新的应用程序，利用AI技术帮助用户记录和整理他们的日常灵感。应用应该能够分析内容并自动分类归档。
+                    <br><br>
+                    特点包括：
+                    <br>
+                    - 智能分类系统<br>
+                    - 标签自动推荐<br>
+                    - 语音输入功能<br>
+                    - 灵感关联建议<br>
+                    - 跨平台同步<br>
+                    <br>
+                    可以考虑以订阅模式盈利，提供基础免费版和高级付费版。高级版可以包括更多AI分析功能、更大存储空间以及更多自定义选项。
+                </div>
+                
+                <!-- 标签 -->
+                <div class="detail-tags">
+                    <span class="ios-tag">AI</span>
+                    <span class="ios-tag">创新</span>
+                    <span class="ios-tag">技术</span>
+                    <span class="ios-tag">应用开发</span>
+                    <span class="ios-tag">商业模式</span>
+                </div>
+                
+                <!-- 相关笔记 -->
+                <div class="detail-section">
+                    <div class="section-header">
+                        <span>相关灵感</span>
+                        <span class="section-header-button">查看全部</span>
+                    </div>
+                    <div class="related-notes">
+                        <div class="related-note">
+                            <div class="related-note-color green"></div>
+                            <div>
+                                <div class="related-note-content">研究SwiftUI的新特性，尤其是关于动画和数据传递的部分。</div>
+                                <div class="related-note-meta">学习 · 2023年6月10日</div>
+                            </div>
+                        </div>
+                        <div class="related-note">
+                            <div class="related-note-color teal"></div>
+                            <div>
+                                <div class="related-note-content">探索AI在个人生产力工具中的应用场景，特别是自然语言处理方面。</div>
+                                <div class="related-note-meta">创意 · 2023年6月8日</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 操作菜单 (可选显示) -->
+        <div class="action-sheet" style="display: none;">
+            <div class="sheet-container">
+                <div class="sheet-header">
+                    <div class="sheet-indicator"></div>
+                    <div class="sheet-title">更多操作</div>
+                </div>
+                <div class="sheet-actions">
+                    <div class="sheet-action">
+                        <div class="sheet-action-icon">
+                            <i class="fas fa-edit"></i>
+                        </div>
+                        <div class="sheet-action-text">编辑笔记</div>
+                    </div>
+                    <div class="sheet-action">
+                        <div class="sheet-action-icon">
+                            <i class="fas fa-copy"></i>
+                        </div>
+                        <div class="sheet-action-text">复制内容</div>
+                    </div>
+                    <div class="sheet-action">
+                        <div class="sheet-action-icon">
+                            <i class="fas fa-share-alt"></i>
+                        </div>
+                        <div class="sheet-action-text">分享笔记</div>
+                    </div>
+                    <div class="sheet-action">
+                        <div class="sheet-action-icon">
+                            <i class="fas fa-magic"></i>
+                        </div>
+                        <div class="sheet-action-text">AI分析建议</div>
+                    </div>
+                    <div class="sheet-action">
+                        <div class="sheet-action-icon destructive">
+                            <i class="fas fa-trash-alt"></i>
+                        </div>
+                        <div class="sheet-action-text destructive">删除笔记</div>
+                    </div>
+                </div>
+                <div class="sheet-cancel">
+                    取消
+                </div>
+            </div>
+        </div>
+        
+        <!-- 底部导航栏 -->
+        <div class="ios-tab-bar" style="height: 50px; width: 100%; background-color: #ffffff; display: flex; justify-content: space-between; align-items: center; position: fixed; bottom: 0; left: 0; right: 0; border-top: 1px solid #e0e0e0; padding: 0; z-index: 100;">
+            <a href="home.html" class="tab-item active" style="text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; height: 49px;">
+                <i class="fas fa-house tab-icon" style="font-size: 21px; color: #33b249; margin-bottom: 2px;"></i>
+                <span class="tab-label" style="font-size: 10px; color: #33b249; margin-top: 1px; font-weight: 500;">首页</span>
+            </a>
+            <a href="tags.html" class="tab-item" style="text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; height: 49px;">
+                <i class="fas fa-tags tab-icon" style="font-size: 21px; color: #8e8e93; margin-bottom: 2px;"></i>
+                <span class="tab-label" style="font-size: 10px; color: #8e8e93; margin-top: 1px;">标签</span>
+            </a>
+            <a href="ai_analysis.html" class="tab-item" style="text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; height: 49px;">
+                <i class="fas fa-chart-simple tab-icon" style="font-size: 21px; color: #8e8e93; margin-bottom: 2px;"></i>
+                <span class="tab-label" style="font-size: 10px; color: #8e8e93; margin-top: 1px;">AI分析</span>
+            </a>
+            <a href="settings.html" class="tab-item" style="text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; height: 49px;">
+                <i class="fas fa-gear tab-icon" style="font-size: 21px; color: #8e8e93; margin-bottom: 2px;"></i>
+                <span class="tab-label" style="font-size: 10px; color: #8e8e93; margin-top: 1px;">设置</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html> 
